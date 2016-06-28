@@ -1,0 +1,48 @@
+
+name = "Cerulean Leveller"
+author = "redskhie"
+description = [[Levelling to 100]]
+
+
+function onPathAction()
+
+
+	if getUsablePokemonCount() >= 6 then
+		if getMapName() == "Pokecenter Cerulean" then
+			moveToMap("Cerulean City")
+		elseif getPlayerX() == 26 and getPlayerY() == 31 then
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Route 4")
+			end
+		elseif getMapName() == "Cerulean City" or getMapName() == "Route 4" then
+			return  moveToMap("Cerulean Cave 1F") or moveToCell(96, 14)	
+		elseif getMapName() == "Cerulean Cave 1F"  then	
+			return moveNearExit("Cerulean City")
+		end
+	else
+		if getMapName() == "Cerulean Cave 1F" then
+			moveToMap("Cerulean City")
+		elseif ( getPlayerX() == 1 and getPlayerY() == 20 ) then
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				return moveToCell(26, 30)
+			end
+		elseif getMapName() == "Cerulean City" then	
+			return moveToMap("Route 4")
+		elseif getMapName() == "Route 4"  then	
+			moveToCell(96, 21)
+		elseif getMapName() == "Pokecenter Cerulean"  then	
+				usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or not isAlreadyCaught() ) then	
+		return useItem("Pokeball") or useItem("Great Ball") or useItem("Ultra Ball") or attack() or run()
+        end
+	return attack() or sendUsablePokemon() or run() or sendAnyPokemon()
+end
