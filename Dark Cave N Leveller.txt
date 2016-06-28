@@ -1,0 +1,40 @@
+name = "Dark Cave"
+author = "redskhie"
+description = [[Levelling at Dark Cave]]
+
+
+function onPathAction()
+
+	if isPokemonUsable(1) then
+		if getMapName() == "Pokecenter Blackthorn" then
+			moveToMap("Blackthorn City")
+		elseif getMapName() == "Blackthorn City" then
+			moveToMap("Route 45")
+		elseif getMapName() == "Route 45" then
+			moveToMap("Dark Cave North")
+		elseif getMapName() == "Dark Cave North" then
+			moveNearExit("Route 45")
+		end
+
+	else
+
+		if getMapName() == "Dark Cave North" then
+			moveToMap("Route 45")
+		elseif getMapName() == "Route 45" then
+			moveToMap("Blackthorn City")
+		elseif getMapName() == "Blackthorn City" then
+			moveToMap("Pokecenter Blackthorn")
+		elseif getMapName() == "Pokecenter Blackthorn" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	if isWildBattle() and isOpponentShiny() then
+		return useItem("Ultra Ball") or useItem("Great Ball") or useItem("Pokeball") 
+	end
+
+	return attack() or sendUsablePokemon() or run() or sendAnyPokemon()
+	
+end
