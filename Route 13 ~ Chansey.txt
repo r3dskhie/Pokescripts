@@ -36,12 +36,7 @@ function onPathAction()
 				moveToMap("Route 13")
 			end	
 		end
-	elseif isNight() and getRemainingPowerPoints(2, "False Swipe") >= 1 then
-		if getMapName() == "Route 13" then
-			moveToCell(18, 35)
-		elseif getMapName() == "Route 14" then
-			moveToGrass()
-		end	
+		
 	else
 		
 		if getMapName() == "Route 13" then
