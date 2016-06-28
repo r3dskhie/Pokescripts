@@ -1,0 +1,43 @@
+name = "s1lver senpai"
+author = "redskhie"
+description = [[This script will farm and level your pokemon at Mt. Silver]]
+
+
+function onPathAction()
+
+
+	if isPokemonUsable(1) then
+		if getMapName() == "Mt. Silver Pokecenter" then
+			moveToMap("Mt. Silver Exterior")
+		elseif getMapName() == "Mt. Silver Exterior" then
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Mt. Silver 1F")
+			end
+		elseif getMapName() == "Mt. Silver 1F" then
+			moveToRectangle(45, 62, 50, 61)
+		end
+	else
+		if getMapName() == "Mt. Silver 1F" then	
+			moveToMap("Mt. Silver Exterior")
+		elseif getMapName() == "Mt. Silver Exterior" then	
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Mt. Silver Pokecenter")
+			end
+	    	elseif getMapName() == "Mt. Silver Pokecenter" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or not isAlreadyCaught() ) then
+		return useItem("Ultra Ball") or useItem("Pokeball") or useItem("Great Ball") or sendUsablePokemon()
+	end
+	
+	return attack() or sendUsablePokemon() or run() or senAnyPokemon()
+	
+end
