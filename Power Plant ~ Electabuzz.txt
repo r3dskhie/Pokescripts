@@ -1,0 +1,56 @@
+name = "Power Ranger"
+author = "redskhie"
+description = [[This script will use sync and false swipe to catch Electabuzz]]
+
+
+function onPathAction()
+
+
+	if (isPokemonUsable(2) and getRemainingPowerPoints(2,"False Swipe") >= 1) then
+		if getMapName() == "Pokecenter Route 10" then
+			moveToMap("Route 10")
+		
+		elseif getMapName() == "Route 10" then
+        		if getPlayerX() == 18 and getPlayerY() == 5 then
+				moveToCell(21, 0)
+			elseif getMapName() == "Route 10" then
+				moveToCell(15, 26)
+			end
+		elseif getMapName() == "Route 9" then
+			moveToCell(91, 33)
+		elseif getMapName() == "Power Plant" then
+			moveNearExit("Route 10")
+
+		end
+	else
+	    	if getMapName() == "Power Plant" then
+			moveToCell(5, 39)
+		elseif getMapName() == "Route 10" then
+			if getPlayerX() == 21 and getPlayerY() == 1 then
+				moveToCell(18, 14)
+			elseif getMapName() == "Route 10" then
+				moveToCell(27, 0)
+			end
+		elseif getMapName() == "Route 9" then
+			moveToCell(85, 33)
+		
+	    	elseif getMapName() == "Pokecenter Route 10" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Electabuzz") then
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2)
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() > 1 ) then
+			return weakAttack() or run()
+		elseif ( getOpponentHealth() == 1 ) then
+			return useItem("Pokeball") or useItem("Great Ball") or useItem("Ultra Ball") or sendUsablePokemon()
+		end
+	end
+
+	return run() or sendAnyPokemon()
+
+end

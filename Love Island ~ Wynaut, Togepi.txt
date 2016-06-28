@@ -1,0 +1,44 @@
+name = "Love Love"
+author = "redskhie"
+description = [[This script will use sync and false swipe to catch Togepi and Wynaut for tank team]]
+
+
+function onPathAction()
+
+
+	if (isPokemonUsable(2) and getRemainingPowerPoints(2,"False Swipe") >= 1) then
+		if getMapName() == "Pokecenter Love Island" then
+			moveToMap("Love Island")
+		
+		elseif getMapName() == "Love Island" then
+        moveToGrass()
+
+		end
+	else
+		if getMapName() == "Love Island" then	
+			moveToMap("Pokecenter Love Island")
+		
+	    elseif getMapName() == "Pokecenter Love Island" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	
+	if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Togepi" ) then
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2)
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() > 1 ) then
+			return weakAttack() or run()
+		elseif ( getOpponentHealth() == 1 ) then
+			return useItem("Pokeball") or useItem("Ultra Ball") or useItem("Great Ball") or sendAnyPokemon()
+		end
+	end
+	if isWildBattle() and ( getOpponentName() == "Wynaut") then
+		return useItem("Pokeball") or useItem("Ultra Ball") or useItem("Great Ball") or sendAnyPokemon()
+		end
+	
+	return run() or sendAnyPokemon()
+	
+end

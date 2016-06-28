@@ -1,0 +1,70 @@
+name = "Bulsey"
+author = "redskhie"
+description = [[This script will use sync and false swipe to catch Chansey and Bulbasaur for tank team]]
+
+
+function onPathAction()
+
+	if isPokemonUsable(2) and getRemainingPowerPoints(2, "False Swipe") >= 1 then
+		if getMapName() == "Pokecenter Fuchsia" then
+			moveToMap("Fuchsia City")
+		elseif getMapName() == "Fuchsia City" then
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Safari Stop")
+			end
+		elseif getMapName() == "Safari Stop" then
+			talkToNpcOnCell(6, 4)	
+		elseif getMapName() == "Safari Entrance" then
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Safari Area 1")
+			end
+		elseif getMapName() == "Safari Area 1" then
+			moveToMap("Safari Area 2")
+		elseif getMapName() == "Safari Area 2" then
+			moveToGrass()
+		end
+	else
+		if getMapName() == "Safari Area 2" then
+			moveToMap("Safari Area 1")
+		elseif getMapName() == "Safari Area 1" then
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Safari Entrance")
+			end
+		elseif getMapName() == "Safari Entrance" then
+			talkToNpcOnCell(27, 25)
+		elseif getMapName() == "Safari Stop" then
+			moveToMap("Fuchsia City")
+		elseif getMapName() == "Fuchsia City" then	
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Pokecenter Fuchsia")	
+			end
+	    	elseif getMapName() == "Pokecenter Fuchsia" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Chansey" or getOpponentName() == "Bulbasaur" ) then
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2) or run()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() > 1 ) then
+			return weakAttack() or run()
+		elseif  getOpponentHealth() == 1  then
+
+			return useItem("Pokeball") or useItem("Great Ball") or useItem("Ultra Ball") or attack() or run()
+        
+		end
+	end
+	
+	return run() or sendUsablePokemon() or attack() or sendAnyPokemon()
+	
+end

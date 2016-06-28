@@ -1,0 +1,53 @@
+name = "Diamond Sableye"
+author = "redskhie"
+description = [[This script will use sync and Hypnosis to catch Sableye]]
+
+
+function onPathAction()
+
+
+	if (isPokemonUsable(2) and getRemainingPowerPoints(2,"Hypnosis") >= 1) then
+	if getMapName() == "Pokecenter Love Island" then
+			moveToMap("Love Island")
+	elseif getMapName() == "Love Island" then
+		
+			moveToCell(18, 35)
+		
+	elseif getMapName() == "Diamond Domain 1F" then
+			moveToCell(39, 16)
+		
+		elseif getMapName() == "Diamond Domain B1F" then
+       moveToRectangle(31, 14, 34, 15)
+
+		end
+	else
+		if getMapName() == "Diamond Domain B1F" then	
+			moveToMap("Diamond Domain 1F")
+		elseif getMapName() == "Diamond Domain 1F" then	
+			moveToCell(24, 53)
+		elseif getMapName() == "Love Island" then	
+			moveToMap("Pokecenter Love Island")
+		
+	    elseif getMapName() == "Pokecenter Love Island" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	
+if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Sableye") then
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2)
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentStatus() ~= "SLEEP" ) then
+			return useMove("Hypnosis")
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentStatus() == "SLEEP" ) then
+
+			return useItem("Ultra Ball") or useItem("Pokeball") or useItem("Great Ball") or sendUsablePokemon()
+        
+		end
+	end
+
+	return run() or attack() or sendAnyPokemon()
+	
+end
