@@ -1,0 +1,109 @@
+name = "Lovey"
+author = "redskhie"
+description = [[Staryu Catcher]]
+
+
+function onPathAction()
+
+
+	if getRemainingPowerPoints(2, "False Swipe") >= 1  then
+		
+		if not isNight() and getPokemonNature(1) ~= "Adamant" then
+			return swapPokemon(3, 1)
+		elseif not isNight() and getPokemonNature(1) == "Adamant" then
+
+		if getMapName() == "Pokecenter Fuchsia" then
+			moveToMap("Fuchsia City")
+		elseif getMapName() == "Fuchsia City" then
+			moveToMap("Fuchsia City Stop House")
+		elseif getMapName() == "Fuchsia City Stop House" then
+			moveToMap("Route 19")
+		elseif getMapName() == "Route 19" then	
+			moveToMap("Route 20")
+		elseif getMapName() == "Route 20" then	
+			moveToCell(60, 32)
+		elseif getMapName() == "Seafoam 1F" then	
+			moveToMap("Seafoam B1F")
+		elseif getMapName() == "Seafoam B1F" then	
+			moveToMap("Seafoam B2F")
+		elseif getMapName() == "Seafoam B2F" then	
+			moveToMap("Seafoam B3F")
+		elseif getMapName() == "Seafoam B3F" then	
+			moveToCell(12, 8)
+		elseif getMapName() == "Seafoam B4F" then
+			if ( getPlayerX() == 10 and getPlayerY() == 12 ) then
+					useItem("Super Rod")
+				else
+					moveToCell(10, 12)
+				end
+		end
+		
+		end
+		
+		if isNight() and getPokemonNature(1) ~= "Timid" then
+			return swapPokemon(3, 1)
+		elseif isNight() and getPokemonNature(1) == "Timid" then
+
+		if getMapName() == "Pokecenter Fuchsia" then
+			moveToMap("Fuchsia City")
+		elseif getMapName() == "Fuchsia City" then
+			moveToMap("Fuchsia City Stop House")
+		elseif getMapName() == "Fuchsia City Stop House" then
+			moveToMap("Route 19")
+		elseif getMapName() == "Route 19" then	
+			moveToMap("Route 20")
+		elseif getMapName() == "Route 20" then	
+			moveToCell(60, 32)
+		elseif getMapName() == "Seafoam 1F" then	
+			moveToMap("Seafoam B1F")
+		elseif getMapName() == "Seafoam B1F" then	
+			moveToMap("Seafoam B2F")
+		elseif getMapName() == "Seafoam B2F" then	
+			moveToMap("Seafoam B3F")
+		elseif getMapName() == "Seafoam B3F" then	
+			moveToCell(12, 8)
+		elseif getMapName() == "Seafoam B4F" then
+			moveToWater()
+		end
+		
+		end
+		
+		
+	else
+		
+		if getMapName() == "Seafoam B4F" then	
+			moveToMap("Seafoam B3F")
+		elseif getMapName() == "Seafoam B3F" then	
+			moveToMap("Seafoam B2F")
+		elseif getMapName() == "Seafoam B2F" then	
+			moveToMap("Seafoam B1F")
+		elseif getMapName() == "Seafoam B1F" then	
+			moveToMap("Seafoam 1F")
+		elseif getMapName() == "Seafoam 1F" then	
+			moveToCell(13, 16)
+		elseif getMapName() == "Route 20" then	
+			moveToMap("Route 19")
+		elseif getMapName() == "Route 19" then	
+			moveToMap("Fuchsia City Stop House")
+		elseif getMapName() == "Fuchsia City House" then	
+			moveToMap("Fuchsia City")
+		elseif getMapName() == "Fuchsia City" then	
+			moveToMap("Pokecenter Fuchsia City")
+	    	elseif getMapName() == "Pokecenter Fuchsia City" then
+			usePokecenter()
+		end
+	end
+end
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or not isAlreadyCaught() or getOpponentName() == "Shellder" or getOpponentName() == "Staryu") then
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2) or run()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() > 1 ) then
+			return weakAttack() or run()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() == 1 ) then
+			return useItem("Pokeball") or useItem("Great Ball") or useItem("Ultra Ball") or attack() or run()
+		end
+	end
+	return run() or sendUsablePokemon() or sendAnyPokemon()
+	
+end
