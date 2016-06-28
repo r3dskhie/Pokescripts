@@ -1,0 +1,107 @@
+name = "Trio"
+author = "redskhie"
+description = [[This script will use sync and false swipe to catch Riolu, Nosepass and Axew]]
+
+
+function onPathAction()
+
+
+	if getRemainingPowerPoints(2, "False Swipe") >= 1 then
+		
+		if isNight() and getPokemonNature(1) ~= "Adamant" then
+			return swapPokemon(3, 1)
+		elseif isNight() and getPokemonNature(1) == "Adamant" then
+
+			if getMapName() == "Pokecenter Dewford Town" then
+				moveToMap("Dewford Town")
+			elseif getMapName() == "Dewford Town" then
+				moveToMap("Route 106")
+			elseif getMapName() == "Route 106" then
+				moveToMap("Granite Cave 1F")
+			elseif getMapName() == "Granite Cave 1F" then
+       	 			moveToCell(17, 13)
+			elseif getMapName() == "Granite Cave B2F" then	
+				moveToCell(11, 9)
+			elseif getMapName() == "Granite Cave B1F" then
+        			moveToRectangle(8, 14, 11, 15)
+			end
+
+		end
+
+		if isNoon() and getPokemonNature(1) ~= "Calm" then
+			return swapPokemon(3, 1)
+		elseif isNoon() and getPokemonNature(1) == "Calm" then
+
+			if getMapName() == "Pokecenter Dewford Town" then
+				moveToMap("Dewford Town")
+			elseif getMapName() == "Dewford Town" then
+				moveToMap("Route 106")
+			elseif getMapName() == "Route 106" then
+				moveToMap("Granite Cave 1F")
+			elseif getMapName() == "Granite Cave 1F" then
+        			moveToCell(17, 13)
+			elseif getMapName() == "Granite Cave B1F" then
+        			moveToCell(11, 8)
+			elseif getMapName() == "Granite Cave B2F" then
+        			moveToRectangle(3, 7, 9, 10)
+			end
+
+		end
+
+		if isMorning() and getPokemonNature(1) ~= "Adamant" then
+			return swapPokemon(3, 1)
+		elseif isMorning() and getPokemonNature(1) == "Adamant" then
+		
+			if getMapName() == "Pokecenter Dewford Town" then
+				moveToMap("Dewford Town")
+			elseif getMapName() == "Dewford Town" then
+				moveToMap("Route 106")
+			elseif getMapName() == "Route 106" then
+				moveToMap("Granite Cave 1F")
+			elseif getMapName() == "Granite Cave B1F" then	
+				moveToCell(5, 23)
+			elseif getMapName() == "Granite Cave B2F" then	
+				moveToCell(11, 9)
+			elseif getMapName() == "Granite Cave 1F" then
+        			moveNearExit("Route 106")
+
+			end
+		
+		end
+
+	else
+
+		if getMapName() == "Granite Cave B2F" then	
+			moveToCell(11, 9)
+		elseif getMapName() == "Granite Cave B1F" then	
+			moveToCell(5, 23)
+		elseif getMapName() == "Granite Cave 1F" then	
+			moveToMap("Route 106")
+		elseif getMapName() == "Route 106" then	
+			moveToMap("Dewford Town")
+		elseif getMapName() == "Dewford Town" then	
+			moveToMap("Pokecenter Dewford Town")
+	    	elseif getMapName() == "Pokecenter Dewford Town" then
+			usePokecenter()
+		end
+
+	end
+
+end
+
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Axew" or getOpponentName() == "Riolu" or getOpponentName() == "Nosepass") then
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2) or run() or sendAnyPokemon()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() > 1 ) then
+			return weakAttack() or sendAnyPokemon() or run()
+		elseif getOpponentHealth() == 1 then
+
+			return useItem("Pokeball") or useItem("Great Ball") or useItem("Ultra Ball") or attack() or run()
+        
+		end
+	end
+
+	return run() or sendUsablePokemon() or sendAnyPokemon()
+	
+end

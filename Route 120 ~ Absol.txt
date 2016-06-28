@@ -1,0 +1,61 @@
+name = "Zero"
+author = "redskhie"
+description = [[This script will use sync and false swipe to catch Absol and Marill]]
+
+
+function onPathAction()
+
+
+	if getRemainingPowerPoints(2, "False Swipe") >= 1 then
+		if getMapName() == "Pokecenter Fortree City" then
+			moveToMap("Fortree City")
+		elseif getMapName() == "Fortree City" then
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Route 120")
+			end
+		elseif getMapName() == "Route 120" then
+        		if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToGrass()
+			end
+		end
+	else
+		if getMapName() == "Route 120" then	
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Fortree City")
+			end
+		elseif getMapName() == "Fortree City" then	
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Pokecenter Fortree City")
+			end
+	    	elseif getMapName() == "Pokecenter Fortree City" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Absol" or getOpponentName() == "Marill" ) then
+		
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2) or run()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() > 1 ) then
+			return weakAttack() or run()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() == 1 ) then
+
+			return useItem("Pokeball") or useItem("Great Ball") or useItem("Ultra Ball") or attack() or run()
+        
+		end
+
+	end
+	
+	return run() or sendUsablePokemon() or sendAnyPokemon()
+	
+end

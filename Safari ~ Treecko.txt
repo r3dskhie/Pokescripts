@@ -1,0 +1,38 @@
+name = "Trikuuu"
+author = "redskhie"
+description = [[Treecko catcher at Safari Hoenn]]
+
+function onPathAction()
+
+	if getRemainingPowerPoints(2, "False Swipe") >= 1 then
+		if getMapName() == "Pokecenter Lilycove City" then
+			moveToMap("Lilycove City")
+		elseif getMapName() == "Lilycove City" then
+		        moveToMap("Route 121")
+		elseif getMapName() == "Route 121" then
+		        moveToMap("Hoenn Safari Zone Lobby")
+		elseif getMapName() == "Hoenn Safari Zone Lobby" then
+                        talkToNpcOnCell(21, 6)
+		elseif getMapName() == "Hoenn Safari Zone Area 1" then
+                        moveToGrass()
+		end
+	end	
+end
+
+function onBattleAction()
+
+	if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Treecko") then
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2) or run()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() > 1 ) then
+			return weakAttack() or run()
+		elseif ( getOpponentHealth() == 1 ) then
+
+			return useItem("Pokeball") or useItem("Great Ball") or useItem("Ultra Ball") or attack() or run()
+        
+		end
+	end
+	  
+	return run()  or sendUsablePokemon() or sendAnyPokemon()
+	
+end

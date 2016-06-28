@@ -1,0 +1,39 @@
+name = "Raltsy"
+author = "redskhie"
+description = [[This script will catch ralts]]
+
+
+function onPathAction()
+
+
+	if isPokemonUsable(1) then
+		if getMapName() == "Pokecenter Petalburg City" then
+			moveToMap("Petalburg City")
+		elseif getMapName() == "Petalburg City" then
+			moveToMap("Route 102")
+		elseif getMapName() == "Route 102" then
+       			moveToGrass()
+
+		end
+
+	else
+
+		if getMapName() == "Route 102" then	
+			moveToMap("Petalburg City")
+		elseif getMapName() == "Petalburg City" then	
+			moveToMap("Pokecenter Petalburg City")
+		
+	    	elseif getMapName() == "Pokecenter Petalburg City" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Ralts" ) then
+		return useItem("Ultra Ball") or useItem("Pokeball") or useItem("Great Ball") or attack() or run()	
+	end
+	
+	return run() or sendAnyPokemon()
+	
+end

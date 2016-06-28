@@ -1,0 +1,74 @@
+name = "Shroom"
+author = "redskhie"
+description = [[This script will use sync and Hypnosis to catch Shroomish and Slakoth ]]
+
+
+function onPathAction()
+
+
+	if getRemainingPowerPoints(1,"Hypnosis") >= 1 then
+
+		if getMapName() == "Pokecenter Petalburg City" then
+			moveToMap("Petalburg City")
+		elseif getMapName() == "Petalburg City" then
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToCell(0, 16)
+			end
+			
+		elseif getMapName() == "Route 104" then
+        		if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToCell(36, 80)
+			end
+		elseif getMapName() == "Petalburg Woods" then
+      			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToGrass()
+			end
+		end
+
+	else
+
+		if getMapName() == "Petalburg Woods" then	
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Route 104")
+			end
+		elseif getMapName() == "Route 104" then	
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Petalburg City")
+			end
+		elseif getMapName() == "Petalburg City" then	
+			if not isMounted() then
+				useItem("Arcanine Mount")
+			elseif isMounted() then
+				moveToMap("Pokecenter Petalburg City")
+			end
+	    	elseif getMapName() == "Pokecenter Petalburg City" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Shroomish" or getOpponentName() == "Slakoth" ) then
+		
+		if ( getActivePokemonNumber() == 1 ) and ( getOpponentStatus() ~= "SLEEP" ) then
+			return useMove("Hypnosis")
+		elseif ( getActivePokemonNumber() == 1 ) and ( getOpponentStatus() == "SLEEP" ) then
+
+			return useItem("Ultra Ball") or useItem("Pokeball") or useItem("Great Ball") or sendUsablePokemon()
+        
+		end
+	end
+	
+	return run() or sendAnyPokemon()
+	
+end
