@@ -1,0 +1,35 @@
+name = "TF"
+author = "redskhie"
+description = [[Meditite Catcher]]
+
+
+function onPathAction()
+
+
+	if getRemainingPowerPoints(2, "False Swipe") >= 1  then
+		if getMapName() == "Pokecenter Trainers Valley" then
+			moveToMap("Trainers Valley")
+		elseif getMapName() == "Trainers Valley" then
+			moveToGrass()
+		end
+	else
+		if getMapName() == "Trainers Valley" then	
+			moveToMap("Pokecenter Trainers Valley")
+	    	elseif getMapName() == "Pokecenter Trainers Valley" then
+			usePokecenter()
+		end
+	end
+end
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or not isAlreadyCaught() or getOpponentName() == "Meditite") then
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2) or sendAnyPokemon() or run()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() > 1 ) then
+			return weakAttack() or sendAnyPokemon() or run()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() == 1 ) then
+			return useItem("Pokeball") or useItem("Great Ball") or useItem("Ultra Ball") or attack()  or sendAnyPokemon() or run()
+		end
+	end
+	return run() or sendUsablePokemon() or sendAnyPokemon()
+	
+end

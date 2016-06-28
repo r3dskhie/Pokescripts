@@ -1,0 +1,53 @@
+name = "Diamond Sableye"
+author = "redskhie"
+description = [[This script will use sync and Hypnosis to catch Sableye]]
+
+
+function onPathAction()
+
+
+	if (isPokemonUsable(2) and getRemainingPowerPoints(2,"False Swipe") >= 1) then
+	if getMapName() == "Pokecenter Love Island" then
+			moveToMap("Love Island")
+	elseif getMapName() == "Love Island" then
+		
+			moveToCell(18, 35)
+		
+	elseif getMapName() == "Diamond Domain 1F" then
+			moveToCell(37, 39)
+		
+		elseif getMapName() == "Diamond Domain B1F" then
+       			moveToCell(35, 43)
+		elseif  getPlayerX() == 35 then
+      		 	useItem("Super Rod")
+
+		end
+	else
+		if getMapName() == "Diamond Domain B1F" then	
+			moveToMap("Diamond Domain 1F")
+		elseif getMapName() == "Diamond Domain 1F" then	
+			moveToCell(24, 53)
+		elseif getMapName() == "Love Island" then	
+			moveToMap("Pokecenter Love Island")
+		
+	    elseif getMapName() == "Pokecenter Love Island" then
+			usePokecenter()
+		end
+	end
+end
+
+function onBattleAction()
+	if isWildBattle() and ( isOpponentShiny() or getOpponentName() == "Staryu") then
+		if getActivePokemonNumber() == 1 then
+			return sendPokemon(2)
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() > 1 ) then
+			return weakAttack() or run()
+		elseif ( getActivePokemonNumber() == 2 ) and ( getOpponentHealth() == 1 ) then
+			return useItem("Pokeball") or useItem("Ultra Ball") or run()
+		end
+	end
+	
+if getActivePokemonNumber() >= 1 then
+		return run() or attack() or sendPokemon(3) or sendPokemon(4) or sendPokemon(5)
+	end
+end
